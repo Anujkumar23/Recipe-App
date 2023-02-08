@@ -8,8 +8,10 @@ import Paper from '@mui/material/Paper';
 import { useAuth } from '../firebase/Auth';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getRecipe } from '../feature/recipe-slice';
+import SaveIcon from '@mui/icons-material/Save';
+import { getRecipeBookItems } from '../../utils';
 
 
 
@@ -33,7 +35,8 @@ function SearchBar(){
     }
 
     useEffect(()=>{
-        dispatch(getRecipe());
+        dispatch(getRecipe(searchTerm));
+        setSearchText('')
     },[searchTerm])
 
 
@@ -73,6 +76,11 @@ function Header() {
     const theme =useTheme()
     const navigate=useNavigate();
     const {user,signOutUser}=useAuth();
+    const [anchorEl,setAnchorEl]=useState(null);
+    const isOpen=Boolean(anchorEl)
+
+    const recipeBook=useSelector(state=>state.recipeBook.value)
+    const count=getRecipeBookItems(recipeBook);
 
     const StyledLink=styled(Link)(({theme})=>({
         color:theme.palette.common.white,
@@ -82,8 +90,49 @@ function Header() {
       const login=()=>{
         navigate("/login")
        }
+
+       const navigateToRecipeBook=()=>{
+           navigate("/recipebook")
+       }
+
+       const  handleProfileMenuOpen=(e)=> {
+        setAnchorEl(e.currentTarget);
+      }
+      
+       const handleMenuClose=()=>{
+        setAnchorEl(null)
+       }
+       const logOut= async()=>{
+        await signOutUser()
+         navigate("/login")
+       }
+
+       const renderMenu=(
+        <Menu  anchorEl={anchorEl}
+        id="user-profile-menu"
+        keepMounted 
+        open={isOpen}
+        onClose={handleMenuClose} 
+        transformOrigin={{
+          horizontal: "right",
+          vertical: "top",
+        }}
+        anchorOrigin={{
+          horizontal: "right",
+          vertical: "bottom",
+        }}  >
+      
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={logOut}>Logout</MenuItem>
+        </Menu>
+       )
+        
+
+
+
   return (
-    <AppBar position='sticky' >
+    <>
+        <AppBar position='sticky' >
         <Toolbar xs={12} sx={{py:theme.spacing(),gap:2, justifyContent:'space-between'}}>
             <Typography variant="h6" color="inherit" sx={{padding:theme.spacing()}}>
               <StyledLink to="/">Recipe App</StyledLink>
@@ -92,18 +141,21 @@ function Header() {
             <SearchBar/>
 
             <Box sx={{display:{sm:"flex",xs:"none",}}}>
-            {/* <IconButton size='large' color='inherit' onClick={navigateToCart}sx={{ml:theme.spacing()}} >
+             <IconButton size='large' color='inherit' onClick={navigateToRecipeBook}sx={{ml:theme.spacing()}} > 
              <Badge  badgeContent={count} color="error" >
-              <ShoppingCartIcon />
+              <SaveIcon/>
              </Badge>
                 
-            </IconButton> */}
-            {user?<Button  color='inherit'>{user.displayName??user.email}</Button>:<Button  color='inherit' onClick={login}>Login</Button>}
+            </IconButton> 
+            {user?<Button  color='inherit' onClick={handleProfileMenuOpen} >{user.displayName??user.email}</Button>:<Button  color='inherit' onClick={login}>Login</Button>}
             </Box>
 
 
             </Toolbar>
             </AppBar>
+            {renderMenu}
+    </>
+
   )
 }
 

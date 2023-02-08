@@ -6,6 +6,7 @@ import { AuthProvider } from './firebase/Auth';
 import Home from './pages/Home';
 
 import Login from './pages/Login';
+import RecipeBook from './pages/RecipeBook';
 import Register from './pages/Register';
 import { store } from './store';
 
@@ -13,6 +14,7 @@ const router=createBrowserRouter(createRoutesFromElements(
     <>
     <Route path='/' element={<Layout/>}>
       <Route index element={<Home/>}/>
+      <Route path="recipebook" element={<RecipeBook/>}></Route>
     </Route>
 
     <Route path="/login" element={<Login/>}></Route>
