@@ -1,6 +1,6 @@
 import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRecipe } from "../feature/recipe-slice";
+
 import { useTheme } from "@emotion/react";
 import {
   Button,
@@ -40,6 +40,7 @@ function Home() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.recipes);
+console.log(state.value)
 
   const [expanded, setExpanded] = useState(false);
 
@@ -48,9 +49,7 @@ function Home() {
   };
 
   const { value: products } = state ?? {};
-  if (!products?.length) {
-    dispatch(getRecipe("chicken"));
-  }
+
 
   const  onAddItemTorecipeBook=(product)=>{
         dispatch(addToRecipeBook({product,quantity:1}))
