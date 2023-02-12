@@ -5,8 +5,9 @@ import axios from "axios"
 
 export const getRecipe=createAsyncThunk("recipes/getRecipes",async(searchTerm)=>{
     const response = await axios.get(`https://api.edamam.com/search?q=${searchTerm}&app_id=${APP_ID}&app_key=${APP_KEY}`);
-     console.log(response.data.hits);
-   return  await response.data.hits;
+    response.then(response=>{console.log(response.data.hits)
+        return  response.data.hits;}).catch(error=>{console.log(error)})
+     
 }) 
 const recipeSlice=createSlice({
     name:"recipes",
