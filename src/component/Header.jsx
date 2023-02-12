@@ -35,6 +35,7 @@ function SearchBar(){
     }
 
     useEffect(()=>{
+        
         dispatch(getRecipe(searchTerm));
         setSearchText('')
     },[searchTerm])
