@@ -5,13 +5,15 @@ import axios from "axios"
 
 export const getRecipe=createAsyncThunk("recipes/getRecipes",async(searchTerm)=>{
     try{const response= await axios.get(`https://api.edamam.com/search?q=${searchTerm}&app_id=${APP_ID}&app_key=${APP_KEY}`)
-    return response.data.hits;
-}catch(error){
-    console.log(error)
 
+    return response.data.hits}
+    catch(error){
+        console.log(error.message)
+
+    }
 }
   
-}) 
+) 
 const recipeSlice=createSlice({
     name:"recipes",
     initialState:{
@@ -22,6 +24,7 @@ const recipeSlice=createSlice({
         builder.addCase(getRecipe.pending,(state)=>{state.loading=true})
          builder.addCase(getRecipe.fulfilled,(state,action)=>{
             state.value=action.payload;
+          
             state.loading=false; 
            
          })
