@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecipe } from "../feature/recipe-slice";
 import { useTheme } from "@emotion/react";
@@ -17,16 +17,12 @@ import {
 
 import { styled } from "@mui/material/styles";
 
-import CardHeader from "@mui/material/CardHeader";
+
 
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 import { addToRecipeBook } from "../feature/recipebook-slice";
 
 const ExpandMore = styled((props) => {
