@@ -1,5 +1,5 @@
-import React, { useDeferredValue, useEffect, useState } from 'react'
-import { AppBar,Autocomplete,Badge,Button,IconButton,Menu,MenuItem,Toolbar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { AppBar,Badge,Button,IconButton,Menu,MenuItem,Toolbar, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import {styled,alpha} from "@mui/material/styles";
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRecipe } from '../feature/recipe-slice';
 import SaveIcon from '@mui/icons-material/Save';
-import { getRecipeBookItems } from '../../utils';
+import {getRecipeBookItems} from "../utils"
 
 
 
@@ -21,7 +21,7 @@ function SearchBar(){
     const theme=useTheme()
     const dispatch=useDispatch()
   const [searchText,setSearchText]=useState("");
-  const [searchTerm,setSearchTerm]=useState("")
+  const [searchTerm,setSearchTerm]=useState("chicken")
 
     const updateSearch=(e)=>{
         setSearchText(e.target.value)
